@@ -1,0 +1,49 @@
+{
+  "_format_version": "2.1",
+  "_transform": true,
+  "plugins": [
+    {
+      "name": "custom-auth",
+      "config": {
+        "validation_endpoint": "http://172.17.0.1:3001/v1/auth/validate-iam-policies",
+        "token_header": "Authorization",
+        "ssl_verify": true
+      }
+    }
+  ],
+  "services": [
+    {
+      "name": "core",
+      "url": "http://172.17.0.1:3001",
+      "routes": [
+        {
+          "name": "core",
+          "strip_path": true,
+          "paths": [
+            "/"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "user-manager",
+      "url": "http://172.17.0.1:3010",
+      "routes": [
+        {
+          "name": "user-manager",
+          "strip_path": true,
+          "paths": [
+            "/user"
+          ]
+        },
+        {
+          "name": "auth",
+          "strip_path": true,
+          "paths": [
+            "/auth"
+          ]
+        }
+      ]
+    }
+  ]
+}
